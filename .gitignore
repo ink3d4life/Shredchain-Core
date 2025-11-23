@@ -1,0 +1,10 @@
+node_modules/
+.env
+cache/
+artifacts/
+*.lnk
+*.jpg
+*.png
+*.csv
+*.log
+*.msi
