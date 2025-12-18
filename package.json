@@ -5,11 +5,15 @@
   "scripts": {
     "deploy:amoy": "hardhat run scripts/deploy.js --network amoy",
     "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
-    "transfer": "hardhat run scripts/transfer.js --network amoy"
+    "transfer": "hardhat run scripts/transfer.js --network amoy",
+    "dev": "next dev --webpack"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "next": "^16.0.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^3.0.0",
