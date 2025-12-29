@@ -13,10 +13,11 @@ contract Staking is Ownable {
   mapping(address => uint256) public userRewardPerTokenPaid;
   mapping(address => uint256) public rewards;
 
-  constructor(address _shch) {
+  constructor(address _shch) Ownable(msg.sender) {
     shch = IERC20(_shch);
     lastUpdateTime = block.timestamp;
   }
+
 
   function stake(uint256 amount) external {
     updateReward(msg.sender);
@@ -59,54 +60,4 @@ contract Staking is Ownable {
     return shch.balanceOf(address(this));
   }
 }
-EOFcat >> contracts/Staking.sol << 'EOF'
 
-  function updateReward(address account) internal {
-    rewardPerTokenStored = rewardPerToken();
-    lastUpdateTime = block.timestamp;
-    if (account != address(0)) {
-      rewards[account] = earned(account);
-      userRewardPerTokenPaid[account] = rewardPerTokenStored;
-    }
-  }
-
-  function rewardPerToken() public view returns (uint256) {
-    if (totalStaked() == 0) {
-      return rewardPerTokenStored;
-    }
-    return rewardPerTokenStored + ((block.timestamp - lastUpdateTime) * rewardRate * 1e18 / totalStaked());
-  }
-
-  function earned(address account) public view returns (uint256) {
-    return (stakedBalance[account] * (rewardPerToken() - userRewardPerTokenPaid[account]) / 1e18) + rewards[account];
-  }
-
-  function totalStaked() public view returns (uint256) {
-    return shch.balanceOf(address(this));
-  }
-}
-
-  function updateReward(address account) internal {
-    rewardPerTokenStored = rewardPerToken();
-    lastUpdateTime = block.timestamp;
-    if (account != address(0)) {
-      rewards[account] = earned(account);
-      userRewardPerTokenPaid[account] = rewardPerTokenStored;
-    }
-  }
-
-  function rewardPerToken() public view returns (uint256) {
-    if (totalStaked() == 0) {
-      return rewardPerTokenStored;
-    }
-    return rewardPerTokenStored + ((block.timestamp - lastUpdateTime) * rewardRate * 1e18 / totalStaked());
-  }
-
-  function earned(address account) public view returns (uint256) {
-    return (stakedBalance[account] * (rewardPerToken() - userRewardPerTokenPaid[account]) / 1e18) + rewards[account];
-  }
-
-  function totalStaked() public view returns (uint256) {
-    return shch.balanceOf(address(this));
-  }
-}

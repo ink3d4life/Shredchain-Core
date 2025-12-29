@@ -10,12 +10,12 @@ contract AthletePhotoNFT is ERC721URIStorage, Ownable {
     struct AthleteTag {
         string athleteName;
         string fanName;
-        string event;
+        string eventName;
     }
 
     mapping(uint256 => AthleteTag) public athleteTags;
 
-    constructor() ERC721("AthletePhotoNFT", "APN") {
+    constructor() ERC721("AthletePhotoNFT", "APN") Ownable(msg.sender) {
         tokenCounter = 0;
     }
 
@@ -24,7 +24,7 @@ contract AthletePhotoNFT is ERC721URIStorage, Ownable {
         string memory tokenURI,
         string memory athleteName,
         string memory fanName,
-        string memory event
+        string memory eventName
     ) public onlyOwner returns (uint256) {
         uint256 newTokenId = tokenCounter;
         _safeMint(recipient, newTokenId);
@@ -33,7 +33,7 @@ contract AthletePhotoNFT is ERC721URIStorage, Ownable {
         athleteTags[newTokenId] = AthleteTag({
             athleteName: athleteName,
             fanName: fanName,
-            event: event
+            eventName: eventName
         });
 
         tokenCounter += 1;

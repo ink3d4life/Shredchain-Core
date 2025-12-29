@@ -25,7 +25,7 @@ export default function MiningGame() {
     if (!upgradeAmount || upgradeAmount <= 0) return alert('Enter $SHCH amount');
     setHashPower(hashPower + parseInt(upgradeAmount) * 10);
     setUpgradeAmount('');
-    alert('Upgraded with $SHCH!');
+    alert('Upgraded with $SHCH! (SHCH-only payments)');
   };
 
   return (
@@ -35,6 +35,8 @@ export default function MiningGame() {
       <button onClick={generatePart} className="bg-purple-600 px-8 py-4 rounded-lg text-xl mb-8">
         Generate Free NFT Part
       </button>
+
+      <p className="text-lg mb-6">Note: Purchases use <strong>$SHCH</strong> only — MATIC is not accepted.</p>
 
       <p className="text-3xl mb-4">Hash Power: {hashPower}</p>
 

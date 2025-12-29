@@ -14,10 +14,20 @@ contract MiningGame is ERC721URIStorage, Ownable {
   uint256 public constant MINE_COOLDOWN = 1 hours;
   uint256 public constant BASE_REWARD = 10;
 
+  // Prices are denominated in token units (wei, 1e18 = 1 SHCH)
+  uint256 public partPrice; // price per part in SHCH (wei)
+  uint256 public nftPrice; // price to buy special NFT in SHCH (wei)
+
   string[] public trickTypes = ["Kickflip", "Ollie", "Heelflip", "540 Spin", "Frontside Grind", "Big Air", "Backflip"];
 
-  constructor(address _shch) ERC721("Shredchain Rig Parts", "SRP") {
+  constructor(address _shch) ERC721("Shredchain Rig Parts", "SRP") Ownable(msg.sender) {
     shch = IERC20(_shch);
+  }
+
+  // owner-only price configuration
+  function setPrices(uint256 _partPrice, uint256 _nftPrice) external onlyOwner {
+    partPrice = _partPrice;
+    nftPrice = _nftPrice;
   }
 
   function generatePart() public {
@@ -31,8 +41,41 @@ contract MiningGame is ERC721URIStorage, Ownable {
     tokenId++;
   }
 
+  // Buy part(s) using SHCH token only
+  function buyParts(uint256 count) external {
+    require(count > 0, "Count must be > 0");
+    require(partPrice > 0, "Part price not set");
+    uint256 total = partPrice * count;
+    // transfer SHCH from buyer to this contract
+    require(shch.transferFrom(msg.sender, address(this), total), "Payment failed");
+
+    for (uint256 i = 0; i < count; i++) {
+      uint256 power = 20 + (tokenId % 50);
+      string memory uri = "ipfs://placeholder";
+      _safeMint(msg.sender, tokenId);
+      _setTokenURI(tokenId, uri);
+      hashPower[msg.sender] += power;
+      tokenId++;
+    }
+  }
+
+  // Buy a special NFT part with SHCH only
+  function buySpecialNFT(string calldata tokenURI) external {
+    require(nftPrice > 0, "NFT price not set");
+    require(shch.transferFrom(msg.sender, address(this), nftPrice), "Payment failed");
+
+    uint256 power = 100 + (tokenId % 100);
+    uint256 mintedId = tokenId;
+    _safeMint(msg.sender, mintedId);
+    _setTokenURI(mintedId, tokenURI);
+    hashPower[msg.sender] += power;
+    tokenId++;
+  }
+
   function upgradeRig(uint256 amount) public {
-    shch.transferFrom(msg.sender, address(this), amount * 1 ether);
+    // amount expressed in SHCH (not wei) — caller should pass token units in whole SHCH
+    uint256 weiAmount = amount * 1 ether;
+    require(shch.transferFrom(msg.sender, address(this), weiAmount), "Payment failed");
     hashPower[msg.sender] += amount * UPGRADE_RATE;
   }
 

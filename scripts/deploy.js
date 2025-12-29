@@ -1,27 +1,28 @@
 const hre = require("hardhat");
 
 async function main() {
-  console.log("Deploying AthletePhotoScan...");
+  console.log("Deploying SHCH Token, Presale and MiningGame (example)...");
 
-  // Example: if AthletePhotoScan takes a baseURI or owner address, add them here
-  const baseURI = "ipfs://your-flattened-metadata-link/";
+  const initialSupply = process.env.INITIAL_SUPPLY ? parseInt(process.env.INITIAL_SUPPLY) : 1000000; // default 1,000,000
 
-  const AthletePhotoScan = await hre.ethers.getContractFactory("AthletePhotoScan");
-  const contract = await AthletePhotoScan.deploy(baseURI);
+  const SHCHToken = await hre.ethers.getContractFactory("SHCHToken");
+  const shch = await SHCHToken.deploy(initialSupply);
+  await shch.waitForDeployment?.();
+  console.log("SHCH Token deployed to:", shch.target || shch.address || shch);
 
-  await contract.deployed();
-  console.log("AthletePhotoScan deployed to:", contract.address);
+  // Deploy Presale (using SHCH as both payment token and sale token here)
+  const Presale = await hre.ethers.getContractFactory("Presale");
+  const presale = await Presale.deploy(shch.target || shch.address || shch, shch.target || shch.address || shch);
+  await presale.waitForDeployment?.();
+  console.log("Presale deployed to:", presale.target || presale.address || presale);
 
-  console.log("Verifying contract on PolygonScan...");
-  try {
-    await hre.run("verify:verify", {
-      address: contract.address,
-      constructorArguments: [baseURI],
-    });
-    console.log("Contract verified successfully!");
-  } catch (error) {
-    console.log("Verification failed, but contract is deployed");
-  }
+  // Deploy MiningGame pointing at SHCH token
+  const MiningGame = await hre.ethers.getContractFactory("MiningGame");
+  const mining = await MiningGame.deploy(shch.target || shch.address || shch);
+  await mining.waitForDeployment?.();
+  console.log("MiningGame deployed to:", mining.target || mining.address || mining);
+
+  console.log("Deployment complete. Update .env with these addresses for scripts.");
 }
 
 main().catch((error) => {
