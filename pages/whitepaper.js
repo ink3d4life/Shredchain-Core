@@ -9,10 +9,10 @@ export default function Whitepaper() {
       </Head>
 
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-6xl font-bold text-center text-purple-500 mb-8">SHREDCHAIN WHITEPAPER</h1>
-        <p className="text-center text-xl mb-12">By Mark C. Parnell Sr — Founder & Creative Architect | December 2025</p>
+        <h1 className="text-6xl font-bold text-center text-yellow-400 mb-8">SHREDCHAIN WHITEPAPER</h1>
+        <p className="text-center text-xl mb-12">By Mark C. Parnell Sr — Founder & Creative Architect | December 2025 — New Years Edition</p>
 
-        <section className="mb-12 bg-purple-900/50 p-8 rounded-lg">
+        <section className="mb-12 bg-indigo-900/40 p-8 rounded-lg">
           <h2 className="text-3xl font-bold mb-4">Tokenomics & Allocations</h2>
           <ul className="list-disc pl-8 text-lg">
             <li>Presale & Liquidity: 45%</li>
@@ -23,10 +23,10 @@ export default function Whitepaper() {
           </ul>
         </section>
 
-        <section className="mb-12 bg-purple-900/50 p-8 rounded-lg">
+        <section className="mb-12 bg-indigo-900/40 p-8 rounded-lg">
           <h2 className="text-3xl font-bold mb-4">Roadmap</h2>
           <ul className="list-disc pl-8 text-lg">
-            <li>Phase 1: Christmas presale, staking, mini mining game</li>
+            <li>Phase 1: New Years presale, staking, mini mining game</li>
             <li>Phase 2: Governance, messaging, AI stats</li>
             <li>Phase 3: Wagering, photo scan, NFT battles</li>
           </ul>

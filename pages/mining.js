@@ -29,10 +29,10 @@ export default function MiningGame() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-12 px-4 text-center">
-      <h1 className="text-5xl font-bold mb-8 text-purple-400">SHCH Mini Mining Game</h1>
+    <div className="min-h-screen bg-gradient-to-b from-black via-slate-900 to-indigo-950 text-white py-12 px-4 text-center">
+      <h1 className="text-5xl font-bold mb-8 text-yellow-300">SHCH Mini Mining Game — New Years Edition</h1>
 
-      <button onClick={generatePart} className="bg-purple-600 px-8 py-4 rounded-lg text-xl mb-8">
+      <button onClick={generatePart} className="bg-indigo-600 px-8 py-4 rounded-lg text-xl mb-8">
         Generate Free NFT Part
       </button>
 
@@ -40,13 +40,13 @@ export default function MiningGame() {
 
       <p className="text-3xl mb-4">Hash Power: {hashPower}</p>
 
-      <button onClick={mine} className="bg-green-600 text-4xl px-16 py-10 rounded-lg mb-12">
+      <button onClick={mine} className="bg-emerald-500 text-4xl px-16 py-10 rounded-lg mb-12">
         MINE $SHCH
       </button>
       <p className="text-3xl mb-12">Mined: {mined} $SHCH</p>
 
       <input type="number" placeholder="$SHCH amount" value={upgradeAmount} onChange={e => setUpgradeAmount(e.target.value)} className="p-4 rounded text-black mb-6" />
-      <button onClick={upgrade} className="bg-red-600 px-8 py-4 rounded-lg text-xl">
+      <button onClick={upgrade} className="bg-yellow-500 px-8 py-4 rounded-lg text-xl">
         Upgrade Rig
       </button>
 
