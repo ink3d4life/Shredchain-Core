@@ -12,6 +12,9 @@
     "dev": "next dev --webpack",
     "build": "next build"
   },
+  "scripts": {
+    "check:token": "node scripts/check-token.js"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.0",
     "dotenv": "^16.3.1",
