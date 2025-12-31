@@ -2,12 +2,15 @@
   "name": "shch-token",
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "deploy:amoy": "hardhat run scripts/deploy.js --network amoy",
     "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
     "transfer": "hardhat run scripts/transfer.js --network amoy",
     "dev": "next dev --webpack",
-    "build": "next build && next export"
+    "build": "next build"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.0",
