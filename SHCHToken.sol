@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract SHCHToken is ERC20, ERC20Burnable, Ownable {
     uint256 public constant MAX_SUPPLY = 10_000_000_000 * 10**18;
     
-    constructor(uint256 initialSupply) ERC20("Shedchain", "SHCH") Ownable(msg.sender) {
+    constructor(uint256 initialSupply) ERC20("Shredchain", "SHCH") Ownable(msg.sender) {
         require(initialSupply <= MAX_SUPPLY, "Exceeds max supply");
         _mint(msg.sender, initialSupply * 10**decimals());
     }
